@@ -388,12 +388,6 @@ ecommerce-spring-angular/
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## 📞 Support
-
-- **Documentation**: [Wiki](https://github.com/loiane/ecommerce-spring-angular/wiki)
-- **Issues**: [GitHub Issues](https://github.com/loiane/ecommerce-spring-angular/issues)
-- **Discussions**: [GitHub Discussions](https://github.com/loiane/ecommerce-spring-angular/discussions)
-
 ## 🗺️ Roadmap
 
 - [ ] Implement all core services
