@@ -4,6 +4,8 @@ import com.loiane.product.category.api.CategoryMapper;
 import com.loiane.product.category.api.dto.CategoryRequest;
 import com.loiane.product.category.api.dto.CategoryResponse;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +19,11 @@ public class CategoryService {
 
     public CategoryService(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public Page<CategoryResponse> listAll(Pageable pageable) {
+        return categoryRepository.findAll(pageable).map(CategoryMapper::toResponse);
     }
 
     @Transactional(readOnly = true)

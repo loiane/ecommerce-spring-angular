@@ -4,11 +4,13 @@ import com.loiane.product.category.CategoryService;
 import com.loiane.product.category.api.dto.CategoryRequest;
 import com.loiane.product.category.api.dto.CategoryResponse;
 import jakarta.validation.Valid;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
-import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,8 +24,8 @@ public class CategoryController {
     }
 
     @GetMapping
-    public List<CategoryResponse> list() {
-        return service.listAll();
+    public Page<CategoryResponse> list(@PageableDefault(size = 20, sort = "name") Pageable pageable) {
+        return service.listAll(pageable);
     }
 
     @GetMapping("/{id}")
