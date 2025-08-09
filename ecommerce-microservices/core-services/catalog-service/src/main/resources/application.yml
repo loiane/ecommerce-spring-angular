@@ -1,6 +1,8 @@
 spring:
   application:
     name: catalog-service
+  profiles:
+    active: dev
   datasource:
     url: ${CATALOG_DB_URL:jdbc:postgresql://localhost:5432/catalog}
     username: ${CATALOG_DB_USERNAME:catalog}
@@ -12,9 +14,9 @@ spring:
     open-in-view: false
     properties:
       hibernate:
-        format_sql: true
+        '[format_sql]': true
         jdbc:
-          time_zone: UTC
+          '[time_zone]': UTC
     show-sql: false
   flyway:
     enabled: true
@@ -39,5 +41,5 @@ server:
 logging:
   level:
     root: INFO
-    org.springframework: INFO
-    com.loiane.catalog: DEBUG
+    '[org.springframework]': INFO
+    '[com.loiane.catalog]': DEBUG
