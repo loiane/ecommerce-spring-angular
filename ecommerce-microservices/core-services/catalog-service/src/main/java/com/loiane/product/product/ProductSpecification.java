@@ -10,6 +10,8 @@ import java.util.UUID;
 
 public final class ProductSpecification {
 
+    private static final String STATUS = "status";
+
     private ProductSpecification() {}
 
     public static Specification<Product> hasName(String name) {
@@ -27,7 +29,7 @@ public final class ProductSpecification {
     public static Specification<Product> hasStatus(String status) {
         return (root, query, criteriaBuilder) -> {
             if (status == null || status.trim().isEmpty()) {
-                return criteriaBuilder.conjunction();
+            return criteriaBuilder.equal(root.get(STATUS), status);
             }
             return criteriaBuilder.equal(root.get("status"), status);
         };
@@ -76,13 +78,13 @@ public final class ProductSpecification {
             return categoryJoin.get("id").in(categoryIds);
         };
     }
-
-    public static Specification<Product> isActive() {
+        return (root, query, criteriaBuilder) ->
+            criteriaBuilder.equal(root.get(STATUS), "ACTIVE");
         return (root, query, criteriaBuilder) ->
             criteriaBuilder.equal(root.get("status"), "ACTIVE");
     }
-
-    public static Specification<Product> isNotDraft() {
+        return (root, query, criteriaBuilder) ->
+            criteriaBuilder.notEqual(root.get(STATUS), "DRAFT");
         return (root, query, criteriaBuilder) ->
             criteriaBuilder.notEqual(root.get("status"), "DRAFT");
     }
