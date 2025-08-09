@@ -10,6 +10,7 @@ class ProductServiceApplicationTests {
 
 	@Test
 	void contextLoads() {
+        // default load test
 	}
 
 }
