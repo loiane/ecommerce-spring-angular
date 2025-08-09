@@ -4,9 +4,9 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: ${CATALOG_DB_URL:jdbc:postgresql://localhost:5432/catalog}
-    username: ${CATALOG_DB_USERNAME:catalog}
-    password: ${CATALOG_DB_PASSWORD:catalog}
+    url: ${CATALOG_DB_URL:jdbc:postgresql://localhost:5432/product}
+    username: ${CATALOG_DB_USERNAME:product}
+    password: ${CATALOG_DB_PASSWORD:product}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

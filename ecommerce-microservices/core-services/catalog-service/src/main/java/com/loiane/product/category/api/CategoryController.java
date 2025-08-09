@@ -3,6 +3,11 @@ package com.loiane.product.category.api;
 import com.loiane.product.category.CategoryService;
 import com.loiane.product.category.api.dto.CategoryRequest;
 import com.loiane.product.category.api.dto.CategoryResponse;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,6 +20,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/categories")
+@Tag(name = "Categories", description = "Category management operations")
 public class CategoryController {
 
     private final CategoryService service;
@@ -24,38 +30,84 @@ public class CategoryController {
     }
 
     @GetMapping
-    public Page<CategoryResponse> list(@PageableDefault(size = 20, sort = "name") Pageable pageable) {
+    @Operation(summary = "List all categories", description = "Retrieve a paginated list of all categories")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved categories")
+    })
+    public Page<CategoryResponse> list(
+            @Parameter(description = "Pagination information")
+            @PageableDefault(size = 20, sort = "name") Pageable pageable) {
         return service.listAll(pageable);
     }
 
     @GetMapping("/search")
+    @Operation(summary = "Search categories", description = "Search categories by various criteria")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved search results")
+    })
     public Page<CategoryResponse> search(
+            @Parameter(description = "Category name (partial match)")
             @RequestParam(required = false) String name,
+            @Parameter(description = "Category slug (partial match)")
             @RequestParam(required = false) String slug,
+            @Parameter(description = "Parent category ID")
             @RequestParam(required = false) UUID parentId,
+            @Parameter(description = "Filter root categories (true for categories without parent)")
             @RequestParam(required = false) Boolean isRoot,
+            @Parameter(description = "Pagination information")
             @PageableDefault(size = 20, sort = "name") Pageable pageable) {
         return service.search(name, slug, parentId, isRoot, pageable);
     }
 
     @GetMapping("/{id}")
-    public CategoryResponse get(@PathVariable UUID id) {
+    @Operation(summary = "Get category by ID", description = "Retrieve a single category by its unique identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully retrieved category"),
+            @ApiResponse(responseCode = "404", description = "Category not found")
+    })
+    public CategoryResponse get(
+            @Parameter(description = "Category unique identifier")
+            @PathVariable UUID id) {
         return service.getById(id);
     }
 
     @PostMapping
-    public ResponseEntity<CategoryResponse> create(@Valid @RequestBody CategoryRequest request) {
+    @Operation(summary = "Create a new category", description = "Create a new category with the provided information")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Category created successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid category data")
+    })
+    public ResponseEntity<CategoryResponse> create(
+            @Parameter(description = "Category creation data")
+            @Valid @RequestBody CategoryRequest request) {
         var created = service.create(request);
         return ResponseEntity.created(URI.create("/api/categories/" + created.id())).body(created);
     }
 
     @PutMapping("/{id}")
-    public CategoryResponse update(@PathVariable UUID id, @Valid @RequestBody CategoryRequest request) {
+    @Operation(summary = "Update a category", description = "Update an existing category with new information")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Category updated successfully"),
+            @ApiResponse(responseCode = "400", description = "Invalid category data"),
+            @ApiResponse(responseCode = "404", description = "Category not found")
+    })
+    public CategoryResponse update(
+            @Parameter(description = "Category unique identifier")
+            @PathVariable UUID id,
+            @Parameter(description = "Category update data")
+            @Valid @RequestBody CategoryRequest request) {
         return service.update(id, request);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    @Operation(summary = "Delete a category", description = "Delete a category by its unique identifier")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Category deleted successfully"),
+            @ApiResponse(responseCode = "404", description = "Category not found")
+    })
+    public ResponseEntity<Void> delete(
+            @Parameter(description = "Category unique identifier")
+            @PathVariable UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }

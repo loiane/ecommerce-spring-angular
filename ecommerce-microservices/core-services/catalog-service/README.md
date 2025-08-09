@@ -50,6 +50,7 @@ docker ps
 ### 4. Verify Setup
 
 - **Application**: http://localhost:8081
+- **Interactive API Docs**: http://localhost:8081/swagger-ui.html
 - **Health Check**: http://localhost:8081/actuator/health
 - **Database Admin**: http://localhost:8085 (Adminer)
   - Server: `postgres`
@@ -68,6 +69,32 @@ The service automatically creates the following tables via Flyway migrations:
 See [docs/DATABASE_SCHEMA.md](docs/DATABASE_SCHEMA.md) for detailed schema information.
 
 ## 🔍 API Documentation
+
+### 📋 Interactive API Documentation
+
+This service provides comprehensive **OpenAPI 3.0 documentation** with an interactive Swagger UI interface for easy API exploration and testing.
+
+#### Access the Documentation
+
+- **Swagger UI**: http://localhost:8081/swagger-ui.html
+- **OpenAPI JSON**: http://localhost:8081/v3/api-docs
+- **OpenAPI YAML**: http://localhost:8081/v3/api-docs.yaml
+
+#### Features
+
+- 🚀 **Interactive Testing**: Try out API endpoints directly from the browser
+- 📖 **Complete Documentation**: Detailed descriptions for all endpoints, parameters, and responses
+- 🔍 **Schema Explorer**: Explore request/response models with examples
+- 📊 **Response Examples**: Auto-generated examples with realistic data
+- 🎯 **HTTP Status Codes**: Clear documentation of all possible response codes
+
+#### Using the Swagger UI
+
+1. **Navigate** to http://localhost:8081/swagger-ui.html
+2. **Explore** the available endpoints organized by tags (Products, Categories)
+3. **Try out** endpoints by clicking "Try it out" button
+4. **Fill in** required parameters and request bodies
+5. **Execute** requests and see real-time responses
 
 ### Core Endpoints
 
@@ -127,7 +154,7 @@ GET /api/categories/search?parentId=parent-uuid
 - `parentId` - Filter by parent category
 - `isRoot` - Root categories (true) or subcategories (false)
 
-For complete API documentation, see [docs/API.md](docs/API.md).
+For complete API documentation, see the **Interactive Swagger UI** at http://localhost:8081/swagger-ui.html or [docs/API.md](docs/API.md).
 
 ## 🏗️ Architecture
 
@@ -277,7 +304,7 @@ docker compose up --build
 
 ## 📋 TODO / Roadmap
 
-- [ ] OpenAPI 3.0 documentation generation
+- [x] ~~OpenAPI 3.0 documentation generation~~ ✅ **COMPLETED**
 - [ ] Caching with Redis for frequently accessed data
 - [ ] Security implementation (JWT, OAuth2)
 - [ ] Full-text search with PostgreSQL or Elasticsearch
