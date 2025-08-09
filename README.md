@@ -27,7 +27,7 @@ This project implements a modern microservices architecture with the following k
 | Service | Port | Description | Database | Technology Stack |
 |---------|------|-------------|----------|------------------|
 | **User Service** | 8081 | Authentication, user management | PostgreSQL | Spring Boot, Spring Security, JWT |
-| **Product Catalog** | 8082 | Product management, search | MySQL + Elasticsearch | Spring Boot, Spring Data JPA |
+| **Product Catalog** | 8081 | Product & category management, advanced search & filtering | PostgreSQL | Spring Boot, Spring Data JPA, JPA Specifications |
 | **Order Service** | 8083 | Order processing and management | PostgreSQL | Spring Boot, Spring Data JPA |
 | **Payment Service** | 8084 | Payment processing, transactions | PostgreSQL | Spring Boot, Spring Security |
 | **Shopping Cart** | 8085 | Cart management | Redis | Spring Boot, Redis |
