@@ -179,24 +179,28 @@ src/main/java/com/loiane/product/
 
 ## 🧪 Testing
 
-### Run Tests
+The project includes comprehensive unit and integration tests using TestContainers for database testing.
+
+### Quick Test Commands
 
 ```bash
-# Unit tests
+# Unit tests only (fast, no Docker required)
 ./mvnw test
 
-# Integration tests with Testcontainers
+# All tests including integration tests (with TestContainers)
 ./mvnw verify
 
-# Test coverage report
+# Generate coverage reports
 ./mvnw jacoco:report
 ```
 
-### Test Categories
+### Test Coverage
 
-- **Unit Tests**: Service and specification logic
-- **Integration Tests**: Repository and API endpoints with Testcontainers
-- **Contract Tests**: API response validation
+- **Unit Tests**: 224 tests covering services, controllers, mappers, and specifications
+- **Integration Tests**: 32 tests covering complete API workflows with real PostgreSQL database
+- **Code Coverage**: 80% instruction coverage, 70% branch coverage required
+
+For detailed testing instructions, see [TESTING.md](TESTING.md).
 
 ## 🔧 Configuration
 
@@ -265,7 +269,7 @@ docker compose up --build
 - [API Documentation](docs/API.md) - Complete REST API reference
 - [Filtering and Search Guide](docs/FILTERING_AND_SEARCH.md) - Advanced search capabilities
 - [Database Schema](docs/DATABASE_SCHEMA.md) - Database structure and relationships
-- [Testing Guide](docs/TESTING.md) - Testing strategies and examples
+- [Testing Guide](TESTING.md) - Comprehensive testing with TestContainers
 
 ## 🤝 Contributing
 
