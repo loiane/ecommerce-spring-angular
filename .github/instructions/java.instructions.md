@@ -13,6 +13,7 @@ applyTo: '**/*.java'
 - Address code smells proactively during development rather than accumulating technical debt.
 - Focus on readability, maintainability, and performance when refactoring identified issues.
 - Use IDE / Code editor reported warnings and suggestions to catch common patterns early in development.
+- Use 4 spaces or 1 tab for indentation. 
 
 ## Best practices
 
