@@ -5,7 +5,7 @@ This project uses JaCoCo (Java Code Coverage) for measuring and reporting code c
 ## 📊 Current Coverage Status
 
 - **Instruction Coverage**: 30.9% (404/1306)
-- **Branch Coverage**: 24.7% (36/146)  
+- **Branch Coverage**: 24.7% (36/146)
 - **Line Coverage**: 33.4% (99/296)
 
 ## 🎯 Coverage Goals
@@ -32,7 +32,7 @@ JaCoCo is configured in `pom.xml` with the following features:
                 <goal>prepare-agent</goal>
             </goals>
         </execution>
-        
+
         <!-- Generate coverage report -->
         <execution>
             <id>report</id>
@@ -41,7 +41,7 @@ JaCoCo is configured in `pom.xml` with the following features:
                 <goal>report</goal>
             </goals>
         </execution>
-        
+
         <!-- Check coverage thresholds -->
         <execution>
             <id>check</id>
@@ -118,7 +118,7 @@ JaCoCo measures several types of coverage:
 - Most granular coverage metric
 - **Current**: 30.9%
 
-### Branch Coverage  
+### Branch Coverage
 - Percentage of code branches (if/else, switch, loops) executed
 - Measures decision points in code
 - **Current**: 24.7%
@@ -141,7 +141,7 @@ To reach the 80% instruction coverage goal, focus on:
 
 ### High Impact Areas
 1. **CategoryService** - 0% coverage, 44 lines
-2. **CategoryController** - 0% coverage, 11 lines  
+2. **CategoryController** - 0% coverage, 11 lines
 3. **ProductController** - 0% coverage, 11 lines
 4. **GlobalExceptionHandler** - 0% coverage, 20 lines
 

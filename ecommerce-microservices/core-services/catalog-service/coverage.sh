@@ -21,7 +21,7 @@ mvn test -Dtest=CategorySpecificationTest,ProductSpecificationTest,ProductServic
 
 if [ $? -eq 0 ]; then
     echo -e "${GREEN}✅ Tests completed successfully!${NC}"
-    
+
     # Check if coverage report exists
     if [ -f "target/site/jacoco/index.html" ]; then
         echo ""
@@ -29,12 +29,12 @@ if [ $? -eq 0 ]; then
         echo "   HTML Report: target/site/jacoco/index.html"
         echo "   CSV Report:  target/site/jacoco/jacoco.csv"
         echo "   XML Report:  target/site/jacoco/jacoco.xml"
-        
+
         # Parse coverage from CSV file
         if [ -f "target/site/jacoco/jacoco.csv" ]; then
             echo ""
             echo "📋 Coverage Summary:"
-            
+
             # Calculate overall coverage
             tail -n +2 target/site/jacoco/jacoco.csv | awk -F',' '
             BEGIN {
@@ -68,11 +68,11 @@ if [ $? -eq 0 ]; then
                 }
             }'
         fi
-        
+
         echo ""
         echo -e "${YELLOW}🌐 To view detailed report, open:${NC}"
         echo "   file://$(pwd)/target/site/jacoco/index.html"
-        
+
     else
         echo -e "${RED}❌ Coverage report not found!${NC}"
         exit 1
