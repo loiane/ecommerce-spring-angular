@@ -31,6 +31,7 @@ import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 @DisplayName("ProductService Unit Tests")
+@SuppressWarnings("unchecked")
 class ProductServiceTest {
 
     @Mock
