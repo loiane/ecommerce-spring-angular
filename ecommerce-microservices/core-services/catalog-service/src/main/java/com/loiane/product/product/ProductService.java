@@ -8,6 +8,7 @@ import com.loiane.product.product.api.dto.ProductResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -34,6 +35,38 @@ public class ProductService {
     @Transactional(readOnly = true)
     public List<ProductResponse> listAll() {
         return ProductMapper.toResponseList(productRepository.findAll());
+    }
+
+    @Transactional(readOnly = true)
+    public Page<ProductResponse> search(String name, String status, String brand, String sku,
+                                       Set<UUID> categoryIds, Pageable pageable) {
+        Specification<Product> spec = null;
+
+        if (name != null && !name.trim().isEmpty()) {
+            spec = addSpecification(spec, ProductSpecification.hasName(name));
+        }
+        if (status != null && !status.trim().isEmpty()) {
+            spec = addSpecification(spec, ProductSpecification.hasStatus(status));
+        }
+        if (brand != null && !brand.trim().isEmpty()) {
+            spec = addSpecification(spec, ProductSpecification.hasBrand(brand));
+        }
+        if (sku != null && !sku.trim().isEmpty()) {
+            spec = addSpecification(spec, ProductSpecification.hasSku(sku));
+        }
+        if (categoryIds != null && !categoryIds.isEmpty()) {
+            spec = addSpecification(spec, ProductSpecification.hasAnyCategory(categoryIds));
+        }
+
+        if (spec == null) {
+            return productRepository.findAll(pageable).map(ProductMapper::toResponse);
+        }
+        return productRepository.findAll(spec, pageable).map(ProductMapper::toResponse);
+    }
+
+    private Specification<Product> addSpecification(Specification<Product> existing,
+                                                   Specification<Product> newSpec) {
+        return existing == null ? newSpec : existing.and(newSpec);
     }
 
     @Transactional(readOnly = true)

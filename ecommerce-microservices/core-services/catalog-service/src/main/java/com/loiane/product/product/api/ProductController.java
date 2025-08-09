@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.Set;
 import java.util.UUID;
 
 @RestController
@@ -26,6 +27,17 @@ public class ProductController {
     @GetMapping
     public Page<ProductResponse> list(@PageableDefault(size = 20, sort = "name") Pageable pageable) {
         return service.listAll(pageable);
+    }
+
+    @GetMapping("/search")
+    public Page<ProductResponse> search(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String status,
+            @RequestParam(required = false) String brand,
+            @RequestParam(required = false) String sku,
+            @RequestParam(required = false) Set<UUID> categoryIds,
+            @PageableDefault(size = 20, sort = "name") Pageable pageable) {
+        return service.search(name, status, brand, sku, categoryIds, pageable);
     }
 
     @GetMapping("/{id}")

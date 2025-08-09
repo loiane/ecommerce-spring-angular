@@ -28,6 +28,16 @@ public class CategoryController {
         return service.listAll(pageable);
     }
 
+    @GetMapping("/search")
+    public Page<CategoryResponse> search(
+            @RequestParam(required = false) String name,
+            @RequestParam(required = false) String slug,
+            @RequestParam(required = false) UUID parentId,
+            @RequestParam(required = false) Boolean isRoot,
+            @PageableDefault(size = 20, sort = "name") Pageable pageable) {
+        return service.search(name, slug, parentId, isRoot, pageable);
+    }
+
     @GetMapping("/{id}")
     public CategoryResponse get(@PathVariable UUID id) {
         return service.getById(id);
