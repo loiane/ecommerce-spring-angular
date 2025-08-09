@@ -1,4 +1,4 @@
-package com.loiane.catalog.product;
+package com.loiane.product.product;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

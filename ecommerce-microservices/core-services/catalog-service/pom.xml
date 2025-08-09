@@ -8,11 +8,11 @@
 		<version>3.5.4</version>
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
-	<groupId>com.loiane.catalog</groupId>
-	<artifactId>catalog-service</artifactId>
+	<groupId>com.loiane.product</groupId>
+	<artifactId>product-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>catalog-service</name>
-	<description>Product Catalog Microservice</description>
+	<name>product-service</name>
+	<description>Product Service Microservice</description>
 	<url/>
 	<licenses>
 		<license/>

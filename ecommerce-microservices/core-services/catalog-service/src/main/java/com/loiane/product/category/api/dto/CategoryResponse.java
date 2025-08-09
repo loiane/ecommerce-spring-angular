@@ -1,4 +1,4 @@
-package com.loiane.catalog.category.api.dto;
+package com.loiane.product.category.api.dto;
 
 import java.time.OffsetDateTime;
 import java.util.UUID;

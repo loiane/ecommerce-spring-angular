@@ -1,8 +1,8 @@
-package com.loiane.catalog.product.api;
+package com.loiane.product.product.api;
 
-import com.loiane.catalog.product.Product;
-import com.loiane.catalog.product.api.dto.ProductRequest;
-import com.loiane.catalog.product.api.dto.ProductResponse;
+import com.loiane.product.product.Product;
+import com.loiane.product.product.api.dto.ProductRequest;
+import com.loiane.product.product.api.dto.ProductResponse;
 
 import java.util.List;
 import java.util.Set;

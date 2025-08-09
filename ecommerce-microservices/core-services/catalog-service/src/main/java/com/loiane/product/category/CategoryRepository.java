@@ -1,4 +1,4 @@
-package com.loiane.catalog.category;
+package com.loiane.product.category;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

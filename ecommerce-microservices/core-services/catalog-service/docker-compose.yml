@@ -2,16 +2,16 @@ version: "3.9"
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: catalog-postgres
+    container_name: product-postgres
     restart: unless-stopped
     environment:
-      POSTGRES_DB: ${CATALOG_DB_NAME:-catalog}
-      POSTGRES_USER: ${CATALOG_DB_USERNAME:-catalog}
-      POSTGRES_PASSWORD: ${CATALOG_DB_PASSWORD:-catalog}
+      POSTGRES_DB: ${PRODUCT_DB_NAME:-product}
+      POSTGRES_USER: ${PRODUCT_DB_USERNAME:-product}
+      POSTGRES_PASSWORD: ${PRODUCT_DB_PASSWORD:-product}
     ports:
       - "5432:5432"
     volumes:
-      - pg_data_catalog:/var/lib/postgresql/data
+      - pg_data_product:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER}"]
       interval: 10s
@@ -28,4 +28,4 @@ services:
     depends_on:
       - postgres
 volumes:
-  pg_data_catalog:
+  pg_data_product:

@@ -1,4 +1,4 @@
-package com.loiane.catalog.common.api;
+package com.loiane.product.common.api;
 
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.dao.DataIntegrityViolationException;

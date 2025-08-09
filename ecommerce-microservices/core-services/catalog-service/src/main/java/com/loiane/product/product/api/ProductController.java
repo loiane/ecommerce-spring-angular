@@ -1,8 +1,8 @@
-package com.loiane.catalog.product.api;
+package com.loiane.product.product.api;
 
-import com.loiane.catalog.product.ProductService;
-import com.loiane.catalog.product.api.dto.ProductRequest;
-import com.loiane.catalog.product.api.dto.ProductResponse;
+import com.loiane.product.product.ProductService;
+import com.loiane.product.product.api.dto.ProductRequest;
+import com.loiane.product.product.api.dto.ProductResponse;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

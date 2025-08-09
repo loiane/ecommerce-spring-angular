@@ -1,4 +1,4 @@
-package com.loiane.catalog.product.api.dto;
+package com.loiane.product.product.api.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;

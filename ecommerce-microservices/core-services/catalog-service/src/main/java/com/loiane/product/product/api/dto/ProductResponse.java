@@ -1,4 +1,4 @@
-package com.loiane.catalog.product.api.dto;
+package com.loiane.product.product.api.dto;
 
 import java.time.OffsetDateTime;
 import java.util.List;

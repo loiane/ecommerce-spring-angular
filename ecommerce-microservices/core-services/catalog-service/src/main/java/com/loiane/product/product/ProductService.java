@@ -1,10 +1,10 @@
-package com.loiane.catalog.product;
+package com.loiane.product.product;
 
-import com.loiane.catalog.category.Category;
-import com.loiane.catalog.category.CategoryRepository;
-import com.loiane.catalog.product.api.ProductMapper;
-import com.loiane.catalog.product.api.dto.ProductRequest;
-import com.loiane.catalog.product.api.dto.ProductResponse;
+import com.loiane.product.category.Category;
+import com.loiane.product.category.CategoryRepository;
+import com.loiane.product.product.api.ProductMapper;
+import com.loiane.product.product.api.dto.ProductRequest;
+import com.loiane.product.product.api.dto.ProductResponse;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

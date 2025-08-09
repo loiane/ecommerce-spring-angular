@@ -1,6 +1,6 @@
 spring:
   application:
-    name: catalog-service
+    name: product-service
   profiles:
     active: dev
   datasource:

@@ -1,8 +1,8 @@
-package com.loiane.catalog.category.api;
+package com.loiane.product.category.api;
 
-import com.loiane.catalog.category.Category;
-import com.loiane.catalog.category.api.dto.CategoryRequest;
-import com.loiane.catalog.category.api.dto.CategoryResponse;
+import com.loiane.product.category.Category;
+import com.loiane.product.category.api.dto.CategoryRequest;
+import com.loiane.product.category.api.dto.CategoryResponse;
 
 import java.util.List;
 

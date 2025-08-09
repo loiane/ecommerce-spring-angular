@@ -1,6 +1,6 @@
-package com.loiane.catalog.product;
+package com.loiane.product.product;
 
-import com.loiane.catalog.category.Category;
+import com.loiane.product.category.Category;
 import jakarta.persistence.*;
 import org.hibernate.annotations.UuidGenerator;
 import java.time.OffsetDateTime;
