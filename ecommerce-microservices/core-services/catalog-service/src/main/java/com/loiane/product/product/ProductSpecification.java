@@ -15,7 +15,7 @@ public final class ProductSpecification {
     private ProductSpecification() {}
 
     public static Specification<Product> hasName(String name) {
-        return (root, query, criteriaBuilder) -> {
+        return (root, _, criteriaBuilder) -> {
             if (name == null || name.trim().isEmpty()) {
                 return criteriaBuilder.conjunction();
             }
@@ -27,7 +27,7 @@ public final class ProductSpecification {
     }
 
     public static Specification<Product> hasStatus(String status) {
-        return (root, query, criteriaBuilder) -> {
+        return (root, _, criteriaBuilder) -> {
             if (status == null || status.trim().isEmpty()) {
                 return criteriaBuilder.conjunction();
             }
@@ -36,7 +36,7 @@ public final class ProductSpecification {
     }
 
     public static Specification<Product> hasBrand(String brand) {
-        return (root, query, criteriaBuilder) -> {
+        return (root, _, criteriaBuilder) -> {
             if (brand == null || brand.trim().isEmpty()) {
                 return criteriaBuilder.conjunction();
             }
@@ -48,7 +48,7 @@ public final class ProductSpecification {
     }
 
     public static Specification<Product> hasSku(String sku) {
-        return (root, query, criteriaBuilder) -> {
+        return (root, _, criteriaBuilder) -> {
             if (sku == null || sku.trim().isEmpty()) {
                 return criteriaBuilder.conjunction();
             }
@@ -60,7 +60,7 @@ public final class ProductSpecification {
     }
 
     public static Specification<Product> hasCategory(UUID categoryId) {
-        return (root, query, criteriaBuilder) -> {
+        return (root, _, criteriaBuilder) -> {
             if (categoryId == null) {
                 return criteriaBuilder.conjunction();
             }
@@ -70,7 +70,7 @@ public final class ProductSpecification {
     }
 
     public static Specification<Product> hasAnyCategory(Set<UUID> categoryIds) {
-        return (root, query, criteriaBuilder) -> {
+        return (root, _, criteriaBuilder) -> {
             if (categoryIds == null || categoryIds.isEmpty()) {
                 return criteriaBuilder.conjunction();
             }

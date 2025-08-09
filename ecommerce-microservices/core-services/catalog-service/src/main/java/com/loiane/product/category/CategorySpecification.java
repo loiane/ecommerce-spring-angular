@@ -11,7 +11,7 @@ public final class CategorySpecification {
     private CategorySpecification() {}
 
     public static Specification<Category> hasName(String name) {
-        return (root, query, criteriaBuilder) -> {
+        return (root, _, criteriaBuilder) -> {
             if (name == null || name.trim().isEmpty()) {
                 return criteriaBuilder.conjunction();
             }
@@ -23,7 +23,7 @@ public final class CategorySpecification {
     }
 
     public static Specification<Category> hasSlug(String slug) {
-        return (root, query, criteriaBuilder) -> {
+        return (root, _, criteriaBuilder) -> {
             if (slug == null || slug.trim().isEmpty()) {
                 return criteriaBuilder.conjunction();
             }
@@ -35,7 +35,7 @@ public final class CategorySpecification {
     }
 
     public static Specification<Category> hasParent(UUID parentId) {
-        return (root, query, criteriaBuilder) -> {
+        return (root, _, criteriaBuilder) -> {
             if (parentId == null) {
                 return criteriaBuilder.conjunction();
             }
@@ -44,12 +44,12 @@ public final class CategorySpecification {
     }
 
     public static Specification<Category> isRootCategory() {
-        return (root, query, criteriaBuilder) ->
+        return (root, _, criteriaBuilder) ->
             criteriaBuilder.isNull(root.get(PARENT));
     }
 
     public static Specification<Category> hasSubCategories() {
-        return (root, query, criteriaBuilder) ->
+        return (root, _, criteriaBuilder) ->
             criteriaBuilder.isNotNull(root.get("subCategories"));
     }
 }
