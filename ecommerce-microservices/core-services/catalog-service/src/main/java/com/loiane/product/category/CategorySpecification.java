@@ -37,19 +37,19 @@ public final class CategorySpecification {
     public static Specification<Category> hasParent(UUID parentId) {
         return (root, query, criteriaBuilder) -> {
             if (parentId == null) {
-            return criteriaBuilder.equal(root.get(PARENT).get("id"), parentId);
+                return criteriaBuilder.conjunction();
             }
-            return criteriaBuilder.equal(root.get("parent").get("id"), parentId);
+            return criteriaBuilder.equal(root.get(PARENT).get("id"), parentId);
         };
     }
+
+    public static Specification<Category> isRootCategory() {
         return (root, query, criteriaBuilder) ->
             criteriaBuilder.isNull(root.get(PARENT));
-        return (root, query, criteriaBuilder) ->
-            criteriaBuilder.isNull(root.get("parent"));
     }
+
+    public static Specification<Category> hasSubCategories() {
         return (root, query, criteriaBuilder) ->
-            criteriaBuilder.isNotNull(root.get(PARENT));
-        return (root, query, criteriaBuilder) ->
-            criteriaBuilder.isNotNull(root.get("parent"));
+            criteriaBuilder.isNotNull(root.get("subCategories"));
     }
 }

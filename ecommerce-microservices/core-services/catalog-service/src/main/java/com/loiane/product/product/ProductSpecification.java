@@ -29,9 +29,9 @@ public final class ProductSpecification {
     public static Specification<Product> hasStatus(String status) {
         return (root, query, criteriaBuilder) -> {
             if (status == null || status.trim().isEmpty()) {
-            return criteriaBuilder.equal(root.get(STATUS), status);
+                return criteriaBuilder.conjunction();
             }
-            return criteriaBuilder.equal(root.get("status"), status);
+            return criteriaBuilder.equal(root.get(STATUS), status);
         };
     }
 
@@ -77,15 +77,5 @@ public final class ProductSpecification {
             Join<Product, Category> categoryJoin = root.join("categories", JoinType.INNER);
             return categoryJoin.get("id").in(categoryIds);
         };
-    }
-        return (root, query, criteriaBuilder) ->
-            criteriaBuilder.equal(root.get(STATUS), "ACTIVE");
-        return (root, query, criteriaBuilder) ->
-            criteriaBuilder.equal(root.get("status"), "ACTIVE");
-    }
-        return (root, query, criteriaBuilder) ->
-            criteriaBuilder.notEqual(root.get(STATUS), "DRAFT");
-        return (root, query, criteriaBuilder) ->
-            criteriaBuilder.notEqual(root.get("status"), "DRAFT");
     }
 }
