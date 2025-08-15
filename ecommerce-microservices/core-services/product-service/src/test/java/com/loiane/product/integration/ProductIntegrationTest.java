@@ -1,6 +1,5 @@
 package com.loiane.product.integration;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loiane.product.category.api.dto.CategoryResponse;
 import com.loiane.product.product.api.dto.ProductRequest;
 import com.loiane.product.product.api.dto.ProductResponse;
@@ -51,8 +50,9 @@ class ProductIntegrationTest extends BaseIntegrationTest {
 
             // Verify sample data products are present
             var products = response.getBody().getContent();
-            assertThat(products).anyMatch(product -> product.name().contains("MacBook") || product.name().contains("Galaxy"));
-            assertThat(products).anyMatch(product -> product.brand().equals("Apple") || product.brand().equals("Samsung"));
+            assertThat(products)
+                .anyMatch(product -> product.name().contains("MacBook") || product.name().contains("Galaxy"))
+                .anyMatch(product -> product.brand().equals("Apple") || product.brand().equals("Samsung"));
         }
 
         @Test
@@ -70,7 +70,7 @@ class ProductIntegrationTest extends BaseIntegrationTest {
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNotNull();
             assertThat(response.getBody().getContent()).hasSize(3);
-            assertThat(response.getBody().getNumber()).isEqualTo(0);
+            assertThat(response.getBody().getNumber()).isZero();
             assertThat(response.getBody().getSize()).isEqualTo(3);
         }
 
@@ -264,7 +264,7 @@ class ProductIntegrationTest extends BaseIntegrationTest {
             assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
             assertThat(response.getBody()).isNotNull();
             assertThat(response.getBody().getContent()).isEmpty();
-            assertThat(response.getBody().getTotalElements()).isEqualTo(0);
+            assertThat(response.getBody().getTotalElements()).isZero();
         }
     }
 
