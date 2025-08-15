@@ -42,16 +42,16 @@ public class ProductService {
                                        Set<UUID> categoryIds, Pageable pageable) {
         Specification<Product> spec = null;
 
-        if (name != null && !name.trim().isEmpty()) {
+        if (isNotEmpty(name)) {
             spec = addSpecification(spec, ProductSpecification.hasName(name));
         }
-        if (status != null && !status.trim().isEmpty()) {
+        if (isNotEmpty(status)) {
             spec = addSpecification(spec, ProductSpecification.hasStatus(status));
         }
-        if (brand != null && !brand.trim().isEmpty()) {
+        if (isNotEmpty(brand)) {
             spec = addSpecification(spec, ProductSpecification.hasBrand(brand));
         }
-        if (sku != null && !sku.trim().isEmpty()) {
+        if (isNotEmpty(sku)) {
             spec = addSpecification(spec, ProductSpecification.hasSku(sku));
         }
         if (categoryIds != null && !categoryIds.isEmpty()) {
@@ -62,6 +62,10 @@ public class ProductService {
             return productRepository.findAll(pageable).map(ProductMapper::toResponse);
         }
         return productRepository.findAll(spec, pageable).map(ProductMapper::toResponse);
+    }
+
+    private boolean isNotEmpty(String str) {
+        return str != null && !str.trim().isEmpty();
     }
 
     private Specification<Product> addSpecification(Specification<Product> existing,

@@ -1,8 +1,13 @@
 package com.loiane.product.product;
 
 import com.loiane.product.category.Category;
+
+import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.Join;
 import jakarta.persistence.criteria.JoinType;
+import jakarta.persistence.criteria.Predicate;
+import jakarta.persistence.criteria.Root;
+
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Set;
@@ -11,6 +16,7 @@ import java.util.UUID;
 public final class ProductSpecification {
 
     private static final String STATUS = "status";
+    private static final String PERC = "%";
 
     private ProductSpecification() {}
 
@@ -19,10 +25,7 @@ public final class ProductSpecification {
             if (name == null || name.trim().isEmpty()) {
                 return criteriaBuilder.conjunction();
             }
-            return criteriaBuilder.like(
-                criteriaBuilder.lower(root.get("name")),
-                "%" + name.toLowerCase() + "%"
-            );
+            return buildCriteriaBuilder(root, criteriaBuilder, name, "name");
         };
     }
 
@@ -40,10 +43,7 @@ public final class ProductSpecification {
             if (brand == null || brand.trim().isEmpty()) {
                 return criteriaBuilder.conjunction();
             }
-            return criteriaBuilder.like(
-                criteriaBuilder.lower(root.get("brand")),
-                "%" + brand.toLowerCase() + "%"
-            );
+            return buildCriteriaBuilder(root, criteriaBuilder, brand, "brand");
         };
     }
 
@@ -52,11 +52,16 @@ public final class ProductSpecification {
             if (sku == null || sku.trim().isEmpty()) {
                 return criteriaBuilder.conjunction();
             }
-            return criteriaBuilder.like(
-                criteriaBuilder.lower(root.get("sku")),
-                "%" + sku.toLowerCase() + "%"
-            );
+            return buildCriteriaBuilder(root, criteriaBuilder, sku, "sku");
         };
+    }
+
+    private static Predicate buildCriteriaBuilder(Root<Product> root, CriteriaBuilder criteriaBuilder,
+                                                  String value, String valueName) {
+        return criteriaBuilder.like(
+            criteriaBuilder.lower(root.get(valueName)),
+            PERC + value.toLowerCase() + PERC
+        );
     }
 
     public static Specification<Product> hasCategory(UUID categoryId) {
