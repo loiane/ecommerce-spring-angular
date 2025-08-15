@@ -1,0 +1,57 @@
+### Product API HTTP requests
+# Use a REST client (VS Code REST Client extension) or curl to run these.
+
+# Base URL - adjust if your app runs on a different port or context
+@baseUrl = http://localhost:8081
+
+# Sample IDs - replace with real UUIDs from your DB when needed
+@existingId = 00000000-0000-0000-0000-000000000000
+@categoryId = 11111111-1111-1111-1111-111111111111
+
+### List products (paged)
+GET {{baseUrl}}/api/products?page=0&size=10
+Accept: application/json
+
+### Search products
+# Example: search by name and status, filter by categoryIds (repeatable param)
+GET {{baseUrl}}/api/products/search?name=phone&status=ACTIVE&categoryIds={{categoryId}}&page=0&size=10
+Accept: application/json
+
+### Get product by id
+GET {{baseUrl}}/api/products/{{existingId}}
+Accept: application/json
+
+### Create product
+POST {{baseUrl}}/api/products
+Content-Type: application/json
+Accept: application/json
+
+{
+	"sku": "SKU-12345",
+	"name": "Test Product",
+	"slug": "test-product",
+	"brand": "Acme",
+	"description": "A short description of the test product.",
+	"status": "DRAFT",
+	"categoryIds": ["{{categoryId}}"]
+}
+
+### Update product
+# Replace {{existingId}} with the actual product id
+PUT {{baseUrl}}/api/products/{{existingId}}
+Content-Type: application/json
+Accept: application/json
+
+{
+	"sku": "SKU-12345",
+	"name": "Test Product (Updated)",
+	"slug": "test-product-updated",
+	"brand": "Acme",
+	"description": "Updated description.",
+	"status": "ACTIVE",
+	"categoryIds": ["{{categoryId}}"]
+}
+
+### Delete product
+DELETE {{baseUrl}}/api/products/{{existingId}}
+Accept: application/json
