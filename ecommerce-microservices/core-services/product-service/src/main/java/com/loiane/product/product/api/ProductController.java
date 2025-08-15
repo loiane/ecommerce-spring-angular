@@ -4,16 +4,21 @@ import com.loiane.product.product.ProductService;
 import com.loiane.product.product.api.dto.ProductRequest;
 import com.loiane.product.product.api.dto.ProductResponse;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.Set;
 import java.util.UUID;
 
+@Validated
 @RestController
 @RequestMapping("/api/products")
 public class ProductController {
@@ -41,7 +46,7 @@ public class ProductController {
     }
 
     @GetMapping("/{id}")
-    public ProductResponse get(@PathVariable UUID id) {
+    public ProductResponse get(@PathVariable @NotNull UUID id) {
         return service.getById(id);
     }
 
@@ -57,7 +62,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> delete(@PathVariable UUID id) {
+    public ResponseEntity<Void> delete(@PathVariable @NotNull UUID id) {
         service.delete(id);
         return ResponseEntity.noContent().build();
     }
