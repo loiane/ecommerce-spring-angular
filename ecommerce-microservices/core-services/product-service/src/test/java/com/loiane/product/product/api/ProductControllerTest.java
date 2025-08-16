@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loiane.product.product.ProductService;
 import com.loiane.product.product.api.dto.ProductRequest;
 import com.loiane.product.product.api.dto.ProductResponse;
-import jakarta.persistence.EntityNotFoundException;
+import com.loiane.product.common.exception.ProductNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -236,7 +236,7 @@ class ProductControllerTest {
             var productId = UUID.randomUUID();
 
             when(productService.getById(productId))
-                .thenThrow(new EntityNotFoundException("Product not found: " + productId));
+                .thenThrow(new ProductNotFoundException(productId));
 
             // When & Then
             mockMvc.perform(get("/api/products/{id}", productId))
@@ -330,7 +330,7 @@ class ProductControllerTest {
             var request = createTestProductRequest();
 
             when(productService.update(eq(productId), any(ProductRequest.class)))
-                .thenThrow(new EntityNotFoundException("Product not found: " + productId));
+                .thenThrow(new ProductNotFoundException(productId));
 
             // When & Then
             mockMvc.perform(put("/api/products/{id}", productId)
@@ -367,7 +367,7 @@ class ProductControllerTest {
             // Given
             var productId = UUID.randomUUID();
 
-            doThrow(new EntityNotFoundException("Product not found: " + productId))
+            doThrow(new ProductNotFoundException(productId))
                 .when(productService).delete(productId);
 
             // When & Then

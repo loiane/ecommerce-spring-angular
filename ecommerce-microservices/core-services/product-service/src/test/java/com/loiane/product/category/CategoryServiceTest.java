@@ -2,7 +2,7 @@ package com.loiane.product.category;
 
 import com.loiane.product.category.api.dto.CategoryRequest;
 import com.loiane.product.category.api.dto.CategoryResponse;
-import jakarta.persistence.EntityNotFoundException;
+import com.loiane.product.common.exception.CategoryNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -289,20 +289,20 @@ class CategoryServiceTest {
         }
 
         @Test
-        @DisplayName("Should throw EntityNotFoundException when category not found")
-        void shouldThrowEntityNotFoundExceptionWhenCategoryNotFound() {
+        @DisplayName("Should throw CategoryNotFoundException when category not found")
+        void shouldThrowCategoryNotFoundExceptionWhenCategoryNotFound() {
             // Given
             var categoryId = UUID.randomUUID();
 
             when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
 
             // When & Then
-            EntityNotFoundException exception = assertThrows(
-                EntityNotFoundException.class,
+            CategoryNotFoundException exception = assertThrows(
+                CategoryNotFoundException.class,
                 () -> categoryService.getById(categoryId)
             );
 
-            assertEquals("Category not found: " + categoryId, exception.getMessage());
+            assertEquals("Category not found with ID: " + categoryId, exception.getMessage());
             verify(categoryRepository).findById(categoryId);
         }
     }
@@ -356,8 +356,8 @@ class CategoryServiceTest {
         }
 
         @Test
-        @DisplayName("Should throw EntityNotFoundException when parent not found")
-        void shouldThrowEntityNotFoundExceptionWhenParentNotFound() {
+        @DisplayName("Should throw CategoryNotFoundException when parent not found")
+        void shouldThrowCategoryNotFoundExceptionWhenParentNotFound() {
             // Given
             var parentId = UUID.randomUUID();
             var request = new CategoryRequest("Smartphones", "smartphones", parentId);
@@ -365,12 +365,12 @@ class CategoryServiceTest {
             when(categoryRepository.findById(parentId)).thenReturn(Optional.empty());
 
             // When & Then
-            EntityNotFoundException exception = assertThrows(
-                EntityNotFoundException.class,
+            CategoryNotFoundException exception = assertThrows(
+                CategoryNotFoundException.class,
                 () -> categoryService.create(request)
             );
 
-            assertEquals("Parent category not found: " + parentId, exception.getMessage());
+            assertEquals("Category not found with ID: " + parentId, exception.getMessage());
             verify(categoryRepository).findById(parentId);
             verify(categoryRepository, never()).save(any(Category.class));
         }
@@ -425,8 +425,8 @@ class CategoryServiceTest {
         }
 
         @Test
-        @DisplayName("Should throw EntityNotFoundException when category not found")
-        void shouldThrowEntityNotFoundExceptionWhenCategoryNotFound() {
+        @DisplayName("Should throw CategoryNotFoundException when category not found")
+        void shouldThrowCategoryNotFoundExceptionWhenCategoryNotFound() {
             // Given
             var categoryId = UUID.randomUUID();
             var request = createTestCategoryRequest();
@@ -434,18 +434,18 @@ class CategoryServiceTest {
             when(categoryRepository.findById(categoryId)).thenReturn(Optional.empty());
 
             // When & Then
-            EntityNotFoundException exception = assertThrows(
-                EntityNotFoundException.class,
+            CategoryNotFoundException exception = assertThrows(
+                CategoryNotFoundException.class,
                 () -> categoryService.update(categoryId, request)
             );
 
-            assertEquals("Category not found: " + categoryId, exception.getMessage());
+            assertEquals("Category not found with ID: " + categoryId, exception.getMessage());
             verify(categoryRepository).findById(categoryId);
         }
 
         @Test
-        @DisplayName("Should throw EntityNotFoundException when parent not found")
-        void shouldThrowEntityNotFoundExceptionWhenParentNotFound() {
+        @DisplayName("Should throw CategoryNotFoundException when parent not found")
+        void shouldThrowCategoryNotFoundExceptionWhenParentNotFound() {
             // Given
             var categoryId = UUID.randomUUID();
             var parentId = UUID.randomUUID();
@@ -457,12 +457,12 @@ class CategoryServiceTest {
             when(categoryRepository.findById(parentId)).thenReturn(Optional.empty());
 
             // When & Then
-            EntityNotFoundException exception = assertThrows(
-                EntityNotFoundException.class,
+            CategoryNotFoundException exception = assertThrows(
+                CategoryNotFoundException.class,
                 () -> categoryService.update(categoryId, request)
             );
 
-            assertEquals("Parent category not found: " + parentId, exception.getMessage());
+            assertEquals("Category not found with ID: " + parentId, exception.getMessage());
             verify(categoryRepository).findById(categoryId);
             verify(categoryRepository).findById(parentId);
         }
@@ -489,20 +489,20 @@ class CategoryServiceTest {
         }
 
         @Test
-        @DisplayName("Should throw EntityNotFoundException when category not found")
-        void shouldThrowEntityNotFoundExceptionWhenCategoryNotFound() {
+        @DisplayName("Should throw CategoryNotFoundException when category not found")
+        void shouldThrowCategoryNotFoundExceptionWhenCategoryNotFound() {
             // Given
             var categoryId = UUID.randomUUID();
 
             when(categoryRepository.existsById(categoryId)).thenReturn(false);
 
             // When & Then
-            EntityNotFoundException exception = assertThrows(
-                EntityNotFoundException.class,
+            CategoryNotFoundException exception = assertThrows(
+                CategoryNotFoundException.class,
                 () -> categoryService.delete(categoryId)
             );
 
-            assertEquals("Category not found: " + categoryId, exception.getMessage());
+            assertEquals("Category not found with ID: " + categoryId, exception.getMessage());
             verify(categoryRepository).existsById(categoryId);
             verify(categoryRepository, never()).deleteById(categoryId);
         }

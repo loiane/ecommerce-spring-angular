@@ -4,7 +4,8 @@ import com.loiane.product.category.Category;
 import com.loiane.product.category.CategoryRepository;
 import com.loiane.product.product.api.dto.ProductRequest;
 import com.loiane.product.product.api.dto.ProductResponse;
-import jakarta.persistence.EntityNotFoundException;
+import com.loiane.product.common.exception.ProductNotFoundException;
+import com.loiane.product.common.exception.CategoryNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
@@ -263,7 +264,7 @@ class ProductServiceTest {
                 .thenReturn(Optional.empty());
 
             // When & Then
-            assertThrows(EntityNotFoundException.class, () -> {
+            assertThrows(ProductNotFoundException.class, () -> {
                 productService.getById(nonExistentId);
             });
             verify(productRepository).findById(nonExistentId);
@@ -344,7 +345,7 @@ class ProductServiceTest {
                 .thenReturn(Optional.empty());
 
             // When & Then
-            assertThrows(EntityNotFoundException.class, () -> {
+            assertThrows(CategoryNotFoundException.class, () -> {
                 productService.create(request);
             });
             verify(categoryRepository).findById(testCategoryId);
@@ -380,7 +381,7 @@ class ProductServiceTest {
                 .thenReturn(false);
 
             // When & Then
-            assertThrows(EntityNotFoundException.class, () -> {
+            assertThrows(ProductNotFoundException.class, () -> {
                 productService.delete(testProductId);
             });
             verify(productRepository).existsById(testProductId);

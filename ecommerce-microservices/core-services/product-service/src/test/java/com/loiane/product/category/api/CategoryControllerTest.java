@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.loiane.product.category.CategoryService;
 import com.loiane.product.category.api.dto.CategoryRequest;
 import com.loiane.product.category.api.dto.CategoryResponse;
-import jakarta.persistence.EntityNotFoundException;
+import com.loiane.product.common.exception.CategoryNotFoundException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -156,7 +156,7 @@ class CategoryControllerTest {
             var categoryId = UUID.randomUUID();
 
             when(categoryService.getById(categoryId))
-                .thenThrow(new EntityNotFoundException("Category not found: " + categoryId));
+                .thenThrow(new CategoryNotFoundException(categoryId));
 
             // When & Then
             mockMvc.perform(get("/api/categories/{id}", categoryId))
@@ -246,7 +246,7 @@ class CategoryControllerTest {
             var request = createTestCategoryRequest();
 
             when(categoryService.update(eq(categoryId), any(CategoryRequest.class)))
-                .thenThrow(new EntityNotFoundException("Category not found: " + categoryId));
+                .thenThrow(new CategoryNotFoundException(categoryId));
 
             // When & Then
             mockMvc.perform(put("/api/categories/{id}", categoryId)
@@ -283,7 +283,7 @@ class CategoryControllerTest {
             // Given
             var categoryId = UUID.randomUUID();
 
-            doThrow(new EntityNotFoundException("Category not found: " + categoryId))
+            doThrow(new CategoryNotFoundException(categoryId))
                 .when(categoryService).delete(categoryId);
 
             // When & Then
