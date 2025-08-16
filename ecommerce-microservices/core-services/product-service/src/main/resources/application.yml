@@ -22,11 +22,6 @@ spring:
     enabled: true
     baseline-on-migrate: false
     locations: classpath:db/migration
-  cache:
-    type: caffeine
-    cache-names: products,productById,categories,categoryById
-    caffeine:
-      spec: maximumSize=500,expireAfterWrite=300s
 
 # OpenAPI/Swagger Configuration
 springdoc:
