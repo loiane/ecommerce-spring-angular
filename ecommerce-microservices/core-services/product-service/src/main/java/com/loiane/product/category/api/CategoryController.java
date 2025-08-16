@@ -3,17 +3,18 @@ package com.loiane.product.category.api;
 import com.loiane.product.category.CategoryService;
 import com.loiane.product.category.api.dto.CategoryRequest;
 import com.loiane.product.category.api.dto.CategoryResponse;
+import com.loiane.product.common.validation.ValidationGroups;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -112,7 +113,7 @@ public class CategoryController {
     @ApiResponse(responseCode = "409", description = "Category with same slug already exists")
     public ResponseEntity<CategoryResponse> create(
             @Parameter(description = "Category creation data", required = true)
-            @Valid @RequestBody CategoryRequest request) {
+            @Validated(ValidationGroups.Create.class) @RequestBody CategoryRequest request) {
         var created = service.create(request);
         return ResponseEntity.created(URI.create("/api/categories/" + created.id())).body(created);
     }
@@ -132,7 +133,7 @@ public class CategoryController {
             @PathVariable UUID id,
 
             @Parameter(description = "Updated category data", required = true)
-            @Valid @RequestBody CategoryRequest request) {
+            @Validated(ValidationGroups.Update.class) @RequestBody CategoryRequest request) {
         return service.update(id, request);
     }
 

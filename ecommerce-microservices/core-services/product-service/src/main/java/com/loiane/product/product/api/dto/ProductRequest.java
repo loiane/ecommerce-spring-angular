@@ -1,8 +1,11 @@
 package com.loiane.product.product.api.dto;
 
+import com.loiane.product.common.validation.ValidSku;
+import com.loiane.product.common.validation.ValidSlug;
+import com.loiane.product.common.validation.ValidStatus;
+import com.loiane.product.common.validation.ValidationGroups;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.Set;
 import java.util.UUID;
@@ -12,28 +15,28 @@ public record ProductRequest(
         @Schema(description = "Unique product identifier (Stock Keeping Unit)",
             example = "IPH-15-PRO-256",
             pattern = "^[A-Z0-9-]+$")
-        @NotBlank
-        @Size(max = 64)
-        @Pattern(regexp = "^[A-Z0-9-]+$", message = "SKU must be uppercase letters, numbers and hyphens")
+        @NotBlank(groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
+        @Size(max = 64, groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
+        @ValidSku(groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
         String sku,
 
         @Schema(description = "Product display name",
             example = "iPhone 15 Pro")
-        @NotBlank
-        @Size(max = 160)
+        @NotBlank(groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
+        @Size(max = 160, groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
         String name,
 
         @Schema(description = "URL-friendly product identifier",
             example = "iphone-15-pro",
             pattern = "^[a-z0-9-]+$")
-        @NotBlank
-        @Size(max = 180)
-        @Pattern(regexp = "^[a-z0-9-]+$", message = "Slug must be lowercase letters, numbers and hyphens")
+        @NotBlank(groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
+        @Size(max = 180, groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
+        @ValidSlug(groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
         String slug,
 
         @Schema(description = "Product brand or manufacturer",
             example = "Apple")
-        @Size(max = 120)
+        @Size(max = 120, groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
         String brand,
 
         @Schema(description = "Detailed product description",
@@ -43,8 +46,8 @@ public record ProductRequest(
         @Schema(description = "Current product status",
             allowableValues = {"ACTIVE", "INACTIVE", "DRAFT"},
             example = "ACTIVE")
-        @NotBlank
-        @Pattern(regexp = "^(ACTIVE|INACTIVE|DRAFT)$", message = "Invalid status")
+        @NotBlank(groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
+        @ValidStatus(groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
         String status,
 
         @Schema(description = "Set of category IDs this product belongs to",

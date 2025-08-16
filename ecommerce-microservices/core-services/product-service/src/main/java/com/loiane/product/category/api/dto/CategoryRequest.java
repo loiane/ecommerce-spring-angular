@@ -1,8 +1,9 @@
 package com.loiane.product.category.api.dto;
 
+import com.loiane.product.common.validation.ValidSlug;
+import com.loiane.product.common.validation.ValidationGroups;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import java.util.UUID;
 
@@ -10,16 +11,16 @@ import java.util.UUID;
 public record CategoryRequest(
         @Schema(description = "Category display name",
             example = "Electronics")
-        @NotBlank
-        @Size(max = 120)
+        @NotBlank(groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
+        @Size(max = 120, groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
         String name,
 
         @Schema(description = "URL-friendly category identifier",
             example = "electronics",
             pattern = "^[a-z0-9-]+$")
-        @NotBlank
-        @Size(max = 140)
-        @Pattern(regexp = "^[a-z0-9-]+$", message = "Slug must be lowercase letters, numbers and hyphens")
+        @NotBlank(groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
+        @Size(max = 140, groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
+        @ValidSlug(groups = {ValidationGroups.Create.class, ValidationGroups.Update.class})
         String slug,
 
         @Schema(description = "Parent category ID for hierarchical structure (null for root categories)",

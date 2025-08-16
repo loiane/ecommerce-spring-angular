@@ -1,5 +1,7 @@
 package com.loiane.product.product.api;
 
+import com.loiane.product.common.validation.ValidationGroups;
+import com.loiane.product.common.validation.ValidStatus;
 import com.loiane.product.product.ProductService;
 import com.loiane.product.product.api.dto.ProductRequest;
 import com.loiane.product.product.api.dto.ProductResponse;
@@ -9,7 +11,6 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 
 import org.springframework.data.domain.Page;
@@ -82,6 +83,7 @@ public class ProductController {
             @Parameter(description = "Product status",
                 schema = @Schema(allowableValues = {"ACTIVE", "DRAFT", "DISCONTINUED"}),
                 example = "ACTIVE")
+            @ValidStatus(groups = ValidationGroups.Search.class)
             @RequestParam(required = false) String status,
 
             @Parameter(description = "Brand name (partial, case-insensitive)",
@@ -128,7 +130,7 @@ public class ProductController {
     @ApiResponse(responseCode = "409", description = "Product with same SKU already exists")
     public ResponseEntity<ProductResponse> create(
             @Parameter(description = "Product creation data", required = true)
-            @Valid @RequestBody ProductRequest request) {
+            @Validated(ValidationGroups.Create.class) @RequestBody ProductRequest request) {
         var created = service.create(request);
         return ResponseEntity.created(URI.create("/api/products/" + created.id())).body(created);
     }
@@ -148,7 +150,7 @@ public class ProductController {
             @PathVariable UUID id,
 
             @Parameter(description = "Updated product data", required = true)
-            @Valid @RequestBody ProductRequest request) {
+            @Validated(ValidationGroups.Update.class) @RequestBody ProductRequest request) {
         return service.update(id, request);
     }
 
