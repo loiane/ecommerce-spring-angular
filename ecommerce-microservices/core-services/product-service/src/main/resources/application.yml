@@ -27,17 +27,36 @@ spring:
     cache-names: products,productById,productBySku,productBySlug
     caffeine:
       spec: maximumSize=500,expireAfterWrite=300s
+
+# OpenAPI/Swagger Configuration
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui
+    operations-sorter: method
+    tags-sorter: alpha
+    try-it-out-enabled: true
+  show-actuator: true
+
 management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,metrics,prometheus
   endpoint:
     health:
       probes:
         enabled: true
+      show-details: when-authorized
+  prometheus:
+    metrics:
+      export:
+        enabled: true
+
 server:
   port: 8081
+
 logging:
   level:
     root: INFO
