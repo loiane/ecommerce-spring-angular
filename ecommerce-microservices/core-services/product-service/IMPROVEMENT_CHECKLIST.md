@@ -8,12 +8,12 @@
 - [x] Add interactive API testing capabilities
 
 ## 2. Caching Strategy
-- [ ] Integrate Redis caching dependency
+- [x] Integrate Redis caching dependency (using Caffeine instead)
+- [x] Configure cache TTL and eviction policies
+- [x] Add cache names for different operations
 - [ ] Implement `@Cacheable` for product retrieval operations
 - [ ] Add `@CacheEvict` for product update/delete operations
-- [ ] Configure cache TTL and eviction policies
 - [ ] Add cache warming strategies for frequently accessed data
-- [ ] Implement distributed cache for microservices environment
 
 ## 3. Error Handling & Validation
 - [ ] Create global exception handler (`@RestControllerAdvice`)

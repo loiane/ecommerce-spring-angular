@@ -4,6 +4,8 @@ import com.loiane.product.category.api.CategoryMapper;
 import com.loiane.product.category.api.dto.CategoryRequest;
 import com.loiane.product.category.api.dto.CategoryResponse;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -28,6 +30,7 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "categories")
     public List<CategoryResponse> listAll() {
         return CategoryMapper.toResponseList(categoryRepository.findAll());
     }
@@ -60,6 +63,7 @@ public class CategoryService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "categoryById", key = "#id")
     public CategoryResponse getById(UUID id) {
         var entity = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found: " + id));
@@ -67,6 +71,7 @@ public class CategoryService {
     }
 
     @Transactional
+    @CacheEvict(value = "categories", allEntries = true)
     public CategoryResponse create(CategoryRequest request) {
         var entity = CategoryMapper.toEntity(request);
         if (request.parentId() != null) {
@@ -79,6 +84,7 @@ public class CategoryService {
     }
 
     @Transactional
+    @CacheEvict(value = {"categories", "categoryById"}, allEntries = true)
     public CategoryResponse update(UUID id, CategoryRequest request) {
         var entity = categoryRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Category not found: " + id));
@@ -94,6 +100,7 @@ public class CategoryService {
     }
 
     @Transactional
+    @CacheEvict(value = {"categories", "categoryById"}, allEntries = true)
     public void delete(UUID id) {
         if (!categoryRepository.existsById(id)) {
             throw new EntityNotFoundException("Category not found: " + id);

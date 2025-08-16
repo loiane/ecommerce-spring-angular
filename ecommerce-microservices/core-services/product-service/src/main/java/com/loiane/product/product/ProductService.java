@@ -6,6 +6,8 @@ import com.loiane.product.product.api.ProductMapper;
 import com.loiane.product.product.api.dto.ProductRequest;
 import com.loiane.product.product.api.dto.ProductResponse;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -74,6 +76,7 @@ public class ProductService {
     }
 
     @Transactional(readOnly = true)
+    @Cacheable(value = "productById", key = "#id")
     public ProductResponse getById(UUID id) {
         var entity = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found: " + id));
@@ -81,6 +84,7 @@ public class ProductService {
     }
 
     @Transactional
+    @CacheEvict(value = "products", allEntries = true)
     public ProductResponse create(ProductRequest request) {
         var entity = ProductMapper.toEntity(request);
         attachCategories(entity, request.categoryIds());
@@ -89,15 +93,18 @@ public class ProductService {
     }
 
     @Transactional
+    @CacheEvict(value = {"products", "productById"}, allEntries = true)
     public ProductResponse update(UUID id, ProductRequest request) {
         var entity = productRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Product not found: " + id));
         ProductMapper.updateEntity(entity, request);
         attachCategories(entity, request.categoryIds());
-        return ProductMapper.toResponse(entity);
+        var saved = productRepository.save(entity);
+        return ProductMapper.toResponse(saved);
     }
 
     @Transactional
+    @CacheEvict(value = {"products", "productById"}, allEntries = true)
     public void delete(UUID id) {
         if (!productRepository.existsById(id)) {
             throw new EntityNotFoundException("Product not found: " + id);
