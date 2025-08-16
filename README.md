@@ -2,6 +2,8 @@
 
 A comprehensive ecommerce platform built with Spring Boot microservices architecture, featuring AI-powered recommendations and intelligent chat support.
 
+![Build](https://github.com/loiane/ecommerce-spring-angular/actions/workflows/build.yml/badge.svg?branch=main)
+
 ## 🏗️ Architecture Overview
 
 This project implements a modern microservices architecture with the following key components:
